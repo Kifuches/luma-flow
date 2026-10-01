@@ -1,0 +1,51 @@
+{
+  "name": "luma-flow",
+  "version": "0.0.1",
+  "description": "Cycle tracking app built with Ionic, Angular, and Capacitor.",
+  "packageManager": "pnpm@12.8.1",
+  "scripts": {
+    "ng": "ng",
+    "ionic": "ionic",
+    "cap": "cap",
+    "start": "NG_BUILD_CACHE_STORE=sqlite ng serve",
+    "build": "NG_BUILD_CACHE_STORE=sqlite ng build",
+    "watch": "NG_BUILD_CACHE_STORE=sqlite ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "sync:ios": "pnpm build && pnpm cap sync ios",
+    "open:ios": "pnpm cap open ios"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "22.1.7",
+    "@angular/compiler": "22.1.7",
+    "@angular/core": "22.1.7",
+    "@angular/forms": "22.1.7",
+    "@angular/platform-browser": "22.1.7",
+    "@angular/router": "22.1.7",
+    "@capacitor/app": "8.1.1",
+    "@capacitor/core": "8.5.2",
+    "@capacitor/haptics": "8.0.2",
+    "@capacitor/ios": "^8.5.2",
+    "@capacitor/keyboard": "8.0.5",
+    "@capacitor/status-bar": "8.0.3",
+    "@ionic/angular": "^9.0.0",
+    "ionicons": "^8.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "22.1.8",
+    "@angular/cli": "22.1.8",
+    "@angular/compiler-cli": "22.1.7",
+    "@angular/language-service": "22.1.7",
+    "@capacitor/cli": "8.5.2",
+    "@ionic/angular-toolkit": "^13.0.0",
+    "angular-eslint": "22.0.0",
+    "eslint": "^10.10.0",
+    "jsdom": "^26.0.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "~4.0.18"
+  }
+}

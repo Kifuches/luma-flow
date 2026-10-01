@@ -1,0 +1,94 @@
+<ion-header class="calendar-header ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button aria-label="Закрыть">
+        <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      <span class="brand">Luma Flow</span>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button aria-label="Настройки">
+        <ion-icon name="settings-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar class="mode-toolbar">
+    <ion-segment [value]="viewMode()" (ionChange)="setViewMode($event.detail.value)">
+      <ion-segment-button value="month">Месяц</ion-segment-button>
+      <ion-segment-button value="year">Год</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <main class="calendar-page" [class.year-page]="viewMode() === 'year'">
+    <section class="calendar-controls" aria-label="Навигация календаря">
+      <ion-button fill="clear" size="small" aria-label="Предыдущий период" (click)="goToPreviousPeriod()">
+        <ion-icon name="chevron-back-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+
+      <button class="today-button" type="button" (click)="goToToday()">{{ navigationLabel() }}</button>
+
+      <ion-button fill="clear" size="small" aria-label="Следующий период" (click)="goToNextPeriod()">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </section>
+
+    <section class="months" [class.year-view]="viewMode() === 'year'" aria-label="Календарь месячных">
+      @for (month of calendarMonths(); track month.id) {
+        <article class="month">
+          <header class="month-heading">
+            <h2>{{ month.title }}</h2>
+            <span>{{ month.year }}</span>
+          </header>
+
+          <div class="weekdays" aria-hidden="true">
+            @for (weekDay of weekDays; track weekDay + $index) {
+              <span>{{ weekDay }}</span>
+            }
+          </div>
+
+          <div class="month-grid" role="grid" [attr.aria-label]="month.title + ' ' + month.year">
+            @for (week of month.weeks; track $index) {
+              @for (day of week; track day?.key ?? 'blank-' + $index) {
+                @if (day) {
+                  <button
+                    class="day"
+                    type="button"
+                    role="gridcell"
+                    [class.today]="day.isToday"
+                    [class.period]="day.isPeriod"
+                    [class.predicted]="day.isPredictedPeriod"
+                    [attr.aria-pressed]="day.isPeriod"
+                    [attr.aria-label]="day.day + ' ' + month.title"
+                    (click)="togglePeriodDay(day)"
+                  >
+                    <span class="day-number">{{ day.day }}</span>
+                  </button>
+                } @else {
+                  <span class="day blank" aria-hidden="true"></span>
+                }
+              }
+            }
+          </div>
+        </article>
+      }
+    </section>
+  </main>
+
+  <div class="period-action" [class.hidden]="viewMode() === 'year'">
+    <button type="button">
+      @if (selectedPeriodCount() > 0) {
+        Отмечено: {{ selectedPeriodCount() }}
+      } @else {
+        Отметь дни месячных
+      }
+    </button>
+  </div>
+</ion-content>
